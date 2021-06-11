@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:cara_ou_coroa/TelaResultado.dart';
 import 'package:flutter/material.dart';
+
+import 'Moeda.dart';
 
 class Home extends StatefulWidget {
   const Home({Key key}) : super(key: key);
@@ -9,13 +13,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  _abrirTelaResultado() {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => TelaResultado(),
-        ));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +26,7 @@ class _HomeState extends State<Home> {
             padding: EdgeInsets.only(top: 30),
             child: GestureDetector(
               onTap: () {
-                _abrirTelaResultado();
+                _escolherMoeda();
               },
               child: Image.asset('images/botao_jogar.png'),
             ),
@@ -37,5 +34,23 @@ class _HomeState extends State<Home> {
         ],
       ),
     );
+  }
+
+
+  void _escolherMoeda() {
+    var moedas = Moeda.values;
+    var indice = Random().nextInt(2);
+
+    _abrirTelaResultado(moedas[indice]);
+
+    //return moedas[indice];
+  }
+
+  _abrirTelaResultado(Moeda moeda) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TelaResultado(moeda),
+        ));
   }
 }
